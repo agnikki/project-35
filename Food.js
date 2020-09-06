@@ -1,34 +1,35 @@
 class Food{
     constructor(){
-        milk_img=loadImage("Milk.png");
-        var foodStock,lastFed;
-        foodStock=20}
+        this.image=loadImage("js/Milk.png");
+        this.foodStock=0;
+        this.lastFed;
+    }
 
        getFoodStock(){
         var getFoodStockRef=database.ref('food');
         getFoodStockRef.on("value",(data)=>{
-            getFoodStock=data.val();
+            this.foodStock=data.val();
         })
        }
-       updateFoodStock(foodStock){
+       updateFoodStock(z){
            database.ref('/').update({
-              foodStock:food 
+              food:z
            })
        }
-       deductFood(){
+      /* deductFood(){
            var deductFoodRef= database.ref('food');
            deductFoodRef.on("value",(data)=>{
             deductFoodRef=data.val();
            })
-       }
+       }*/
    
         display(){
             var x=80,y=100;
 
             imageMode(CENTER);
-            Image(this.image,720,220,70,70);
+            image(this.image,720,220,70,70);
             if (this.foodStock!=0){
-                for(var i=0,i<this.foodStock;i++){
+                for(var i=0;i<this.foodStock;i++){
                     if(i%10==0){
                         x=80;
                         y=y+50                

@@ -14,36 +14,28 @@ function setup() {
   dog.addImage(dog_img);
   dog.scale=0.1;
 
+  foodObj=new Food();
   foodStock=database.ref('food');
   foodStock.on("value",(data)=>{
     foodS=data.val();
   });
   //function to update food stock and last fed time
-  function feedDog(){
-    dog.addImage(happyDog);
+  addFood=createButton("Add Food");
+  addFood.position(800,95);
+  addFood.mousePressed(addFoods);
 
-    foodObj.updateFookStock(FoodObj.getFoodStock()-1);
-    database.ref('/').update({
-      Food:foodObj.getFoodStock(),
-      FeedTime:hour()
-    })
-  }
-  //function to add food in stock
-  function addFoods(){
-    foodS++;
-    database.ref('/').update({
-      Food:foodS
-    })
-  }
+  feed=createButton("Feed the dog");
+feed.position(700,95);
+feed.mousePressed(feedDog);
 }
 
 
 function draw() {  
 background(46,139,87);
 
-Food.display();
-feedTime=database.ref('FeedTime');
-fedTime.on("value",function(data){
+foodObj.display();
+FedTime=database.ref('FeedTime');
+FedTime.on("value",function(data){
  lastFed=data.val();
 });
 
@@ -52,9 +44,9 @@ fedTime.on("value",function(data){
   //add styles here
   stroke("black");
   textSize(20);
- text("foodStock:"+ foodS, 200,100);
+ //text("foodStock:"+ foodS, 200,100);
  
- text("Note:Press up arrow key to feed dog milk!",100,50);
+ //text("Note:Press up arrow key to feed dog milk!",100,50);
 
 }
 function writeStock(x){
@@ -66,22 +58,22 @@ function writeStock(x){
     food:x
   })
 }
-function FeedDog(){
-feed=createButton("Feed the dog");
-feed.position(700,95);
-feed.mousePressed(FeedDog);
-feed.button.Mousepressed(()=>{
-    feed.button.hour()
-    feed.writeStock(foodS);
+
+  //function to add food in stock
+  function addFoods(){
+    foodS++;
+    database.ref('/').update({
+      food:foodS
+    })
+  }
+  function feedDog(){
     dog.addImage(happyDog);
-}) 
-}
 
-function addFood(){
-  addFood=createButton("Add Food");
-  addFood.position(800,95);
-  addFood.mousePressed(addFoods+1);
-}
-
+    foodObj.updateFoodStock(foodS-1);
+    database.ref('/').update({
+      food:foodS,
+      FeedTime:hour()
+    })
+  }
 
 
